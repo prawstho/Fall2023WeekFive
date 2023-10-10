@@ -14,7 +14,7 @@
  * 05 Oct 2023, PJR, altered for lecture prep
  *
  *************************/
-global.DEBUG = true;
+global.DEBUG = false;
 
 const fs = require("fs");
 const { initializeApp } = require('./init.js');
