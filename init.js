@@ -33,7 +33,7 @@ const myEmitter = new MyEmitter();
 // add the listener for the logEvent
 myEmitter.on('log', (event, level, msg) => logEvents(event, level, msg));
 
-const folders = ['models', 'views', 'routes', 'logs', 'json', 'bob', 'controllers'];
+const { folders, configjson, usagetxt } = require('./templates');
 
 function createFolders() {
     if(DEBUG) console.log('init.createFolders()');
@@ -61,40 +61,6 @@ function createFolders() {
         myEmitter.emit('log', 'init.createFolders()', 'INFO', 'All folders successfully created.');
     }
 };
-
-const configjson = { 
-    name: 'AppConfigCLI',
-    version: '1.0.0',
-    description: 'The Command Line Interface (CLI) for the MyApp.',
-    main: 'myapp.js',
-    superuser: 'adm1n',
-    database: 'exampledb'
-};
-
-const usagetxt = `
-
-myapp <command> <option>
-
-Usage:
-
-myapp --help                            displays help
-myapp init --all                        creates the folder structure and config file
-myapp init --mk                         creates the folder structure
-myapp init --cat                        creates the config file with default settings
-myapp config --show                     displays a list of the current config settings
-myapp config --reset                    resets the config file with default settings
-myapp config --set                      sets a specific config setting
-myapp token --count                     displays a count of the tokens created
-myapp token --list                      list all the usernames with tokens
-myapp token --new <username>            generates a token for a given username, saves tokens to the json file
-myapp token --upd p <username> <phone>  updates the json entry with phone number
-myapp token --upd e <username> <email>  updates the json entry with email
-myapp token --fetch <username>          fetches a user record for a given username
-myapp token --search u <username>       searches a token for a given username
-myapp token --search e <email>          searches a token for a given email
-myapp token --search p <phone>          searches a token for a given phone number
-
-`;
 
 function createFiles() {
     if(DEBUG) console.log('init.createFiles()');
@@ -143,7 +109,7 @@ function initializeApp() {
         break;
     case '--cat':
         if(DEBUG) console.log('--cat createFiles()');
-        // TODO: Do all the folders exist? See issue #6
+        // TODO: Do all the folders exist? See issue #6 in github
         createFiles();
         myEmitter.emit('log', 'init --cat', 'INFO', 'Create all files.');
         break;
