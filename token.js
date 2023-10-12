@@ -20,13 +20,30 @@ const { format } = require('date-fns');
 
 const myArgs = process.argv.slice(2);
 
+var tokenCount = function() {
+    if(DEBUG) console.log('token.tokenCount()');
+    return new Promise(function(resolve, reject) {
+        fs.readFile(__dirname + '/json/tokens.json', 'utf-8', (error, data) => {
+            if(error)  
+                reject(error); 
+            else {
+                let tokens = JSON.parse(data);
+                let count = Object.keys(tokens).length;
+                console.log(`Current token count is ${count}.`);
+                myEmitter.emit('log', 'token.tokenCount()', 'INFO', `Current token count is ${count}.`);
+                resolve(count);
+            };
+        });
+    });
+};
+
 function tokenApp() {
   if(DEBUG) console.log('tokenApp()');
 
   switch (myArgs[1]) {
   case '--count':
       if(DEBUG) console.log('token.tokenCount() --count');
-      // tokenCount();
+      tokenCount();
       break;
   case '--list':
       if(DEBUG) console.log('token.tokenList() --list');
