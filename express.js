@@ -17,8 +17,10 @@ app.get('/', (req, res) => {
 app.get('/count', async (req, res) => {
   var theCount = await tokenCount();
   res.setHeader('Content-type', 'text/html');
+  res.write(`<!doctype html><html><body>`);
   res.write(`Token count is ${theCount}</br>`);
   res.write(`<a href="http://localhost:3000">[home]</a>`);
+  res.write(`</body></html>`);
   res.end();
 });
 
